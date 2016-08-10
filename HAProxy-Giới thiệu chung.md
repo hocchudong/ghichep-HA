@@ -15,23 +15,21 @@ kết nối tới backend.
 	
 VD : **acl url_blog path_beg /blog**
 
-	ACL sẽ match nếu như phần request của user bắt đầu với /blog, nó sẽ match với request của http://yourdomain.com/blog/blog-entry-1
+ACL sẽ match nếu như phần request của user bắt đầu với /blog, nó sẽ match với request của http://yourdomain.com/blog/blog-entry-1
 
 ####2. Backend
-
-	Backend là tập hợp của các server mà nhận được request. Các backed được định nghĩa trong section "backend" của file cấu
-	hình HAProxy. Trong phần lớn form cơ bản, 1 backend được định nghĩa bởi :
-	
-		- thuật toán cân bằng tải nào được dùng
-		- danh sách các server và port
+Backend là tập hợp của các server mà nhận được request. Các backed được định nghĩa trong section "backend" của file cấu
+hình HAProxy. Trong phần lớn form cơ bản, 1 backend được định nghĩa bởi :	
+ - thuật toán cân bằng tải nào được dùng
+ - danh sách các server và port
 		
-	Một backend có thể chưa một hoặc nhiều server trong nó, thêm nhiều server vào backend của bạn sẽ tiềm năng công suốt 
-	tải bằng việc phân bố tải tới các server. Trong trường hợp các backend server có thể không khả dụng, việc này sẽ làm 
-	tăng độ tin cậy.
+Một backend có thể chưa một hoặc nhiều server trong nó, thêm nhiều server vào backend của bạn sẽ tiềm năng công suốt 
+tải bằng việc phân bố tải tới các server. Trong trường hợp các backend server có thể không khả dụng, việc này sẽ làm 
+tăng độ tin cậy.
 	
-VD : Cấu hình 2 backend, ưeb-backend và blog-backend với 2 web server :
+VD : Cấu hình 2 backend, web-backend và blog-backend với 2 web server :
 
-		backend web-backend <ul>
+<ul>	backend web-backend
 		   balance roundrobin
 		   server web1 web1.yourdomain.com:80 check
 		   server web2 web2.yourdomain.com:80 check
