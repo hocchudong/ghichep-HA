@@ -92,9 +92,9 @@ Các thuật toán cân bằng tải được dùng để chỉ ra rằng server
 1. rounrobin
  - Round Robin chọ server nào được quay. Đây là thuật toán mặc định.
 2. leastconn
-- Chọn server với số các kết nối ít nhất - được đề xuất với các session dài hạn. Các server trong cùng 1 backend được quay vòng với round-robin
+ - Chọn server với số các kết nối ít nhất - được đề xuất với các session dài hạn. Các server trong cùng 1 backend được quay vòng với round-robin
 3. source
-- Chọn server dể dùng dựa vào source IP. Phương thức này đảm bảo user sẽ kết nối tới cùng 1 server.
+ - Chọn server dể dùng dựa vào source IP. Phương thức này đảm bảo user sẽ kết nối tới cùng 1 server.
 	
 ####4. Sticky Session
 
