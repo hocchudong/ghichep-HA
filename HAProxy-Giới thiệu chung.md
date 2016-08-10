@@ -29,18 +29,18 @@ tăng độ tin cậy.
 	
 VD : Cấu hình 2 backend, web-backend và blog-backend với 2 web server :
 
-<ul>	backend web-backend
+		backend web-backend
 		   balance roundrobin
 		   server web1 web1.yourdomain.com:80 check
 		   server web2 web2.yourdomain.com:80 check
-</ul>
+
 		backend blog-backend
 		   balance roundrobin
 		   mode http
 		   server blog1 blog1.yourdomain.com:80 check
 		   server blog1 blog1.yourdomain.com:80 check
-	Thuật toán sử dụng là roundrobin, "mode http" chỉ ra rằng layer 7 proxying dợc dùng. option "check" chỉ ra rằng các 
-	check sẽ được thực hiện ở các server này.
+		   
+Thuật toán sử dụng là roundrobin, "mode http" chỉ ra rằng layer 7 proxying dợc dùng. option "check" chỉ ra rằng các check sẽ được thực hiện ở các server này.
 	
 3. Frontend
 	Frontend định nghĩa việc các request nên được chỏ tới cách backend như thế nào. Frontend được định nghĩa trong section 
