@@ -58,14 +58,13 @@ HAProxy có thể thực hiện được 2 dạng Load Balancing
 ####1. Layer 4 Load Balancing
 
 Cân bằng tải kiểu này sẽ chỏ user traffic dựa vào IP range và port (VD : 1 request tới từ http://yourdomain.com/anything, traffic sẽ được chỏ tới backend mà được kiểm soát bởi yourdomain.com trên port 80)
-	Hình 
-	User truy cập tới load balancer, request của user sẽ được chỏ tới "web-backend" group của các backend server. Bất kỳ 
-	backend server nào được chọn sẽ phản hồi trực tiếp tới request của user. Thông thường, tất cả các user trong web-backend
-	nên có nội dung thống nhất, trong khi user nhận được nội dung không đồng nhất. Chú ý rằng các server kết nối tới cùng 
-	một database.
+
+(!ha)[/images/ha-01.png]
+
+User truy cập tới load balancer, request của user sẽ được chỏ tới "web-backend" group của các backend server. Bất kỳ backend server nào được chọn sẽ phản hồi trực tiếp tới request của user. Thông thường, tất cả các user trong web-backend nên có nội dung thống nhất, trong khi user nhận được nội dung không đồng nhất. Chú ý rằng các server kết nối tới cùng một database.
 ####2. Layer 7 Load Balancing
 
-(!ha)[/images/ha01.png] 
+(!ha)[/images/ha-01.png] 
 
 Nếu người dùng request yourdomain.com/blog, chúng được chỏ tới "blog" backend - một set các server chạy 1 khối ứng dụng.
  Các request khác được chỏ tới "web-backend", chạy ứng dụng khác. Cả 2 backend đều được chỏ tới cùng 1 database..
