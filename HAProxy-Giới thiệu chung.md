@@ -87,27 +87,22 @@ Giải thích :
 
 Các thuật toán cân bằng tải được dùng để chỉ ra rằng server nào, trong 1 backend. sẽ được chọn khi cân bằng tải. HAProxy đưa ra 1 vài lựa chọn cho các thuật toán. Các server có thể được gán parameter "weight" để đánh giá server có được chọn thường xuyên không, so sánh với các server khác.
 
-####4. Một vài thuật toán thông dụng
+#### Một vài thuật toán thông dụng
 
 1. rounrobin
-	Round Robin chọ server nào được quay. Đây là thuật toán mặc định.
+ - Round Robin chọ server nào được quay. Đây là thuật toán mặc định.
 2. leastconn
-	Chọn server với số các kết nối ít nhất - được đề xuất với các session dài hạn. Các server trong cùng 1 backend được 
-	quay vòng với round-robin
+- Chọn server với số các kết nối ít nhất - được đề xuất với các session dài hạn. Các server trong cùng 1 backend được quay vòng với round-robin
 3. source
-	Chọn server dể dùng dựa vào source IP. Phương thức này đảm bảo user sẽ kết nối tới cùng 1 server.
+- Chọn server dể dùng dựa vào source IP. Phương thức này đảm bảo user sẽ kết nối tới cùng 1 server.
 	
-Sticky Session
-	Một vài ứng dụng yêu cầu user tiếp tục kết nối tới cùng backend server. Điều này được thực hiện bởi sticky session, 
-	yêu cầu sử dụng "appsession" parameter ở trên backend.
+####4. Sticky Session
 
-Health Check	
-	HAProxy sử dụng health checks để xác định nếu 1 backend server khả dụng cho quá trình request, nó sẽ tránh được việc 
-	nếu backend không còn khả dụng, thì việc remove server ra khỏi backend đó phải làm bằng tay. Mặc định thì health
-	check sẽ cố khởi tạo 1 kết nối TCP tới server, nó kiểm tra nếu backend server được lắng nghe trên IP và port được cấu 
-	hình.
-	Nếu 1 server fail việc health check, vậy nên không thể tiếp nhận request, nó sẽ tự động tắt trong backend traffic sẽ 
-	chỏ đến nó đến khi nó khả dụng trở lại. NẾu tất cả các server tron backend fail, service sẽ không khả dụng đến khi có 
-	ít nhất 1 tron các backend server khả dụng trở lại.
-	Cho một số loại nhất định của backend, như là database server trong 1 số trường hợp nhất định, health check mặc định 
-	là không đủ để chỉ ra server là vẫn trong tình trạng khỏe mạnh.
+Một vài ứng dụng yêu cầu user tiếp tục kết nối tới cùng backend server. Điều này được thực hiện bởi sticky session, yêu cầu sử dụng "appsession" parameter ở trên backend.
+
+####5. Health Check	
+
+HAProxy sử dụng health checks để xác định nếu 1 backend server khả dụng cho quá trình request, nó sẽ tránh được việc nếu backend không còn khả dụng, thì việc remove server ra khỏi backend đó phải làm bằng tay. Mặc định thì health check sẽ cố gắng khởi tạo 1 kết nối TCP tới server, nó kiểm tra nếu backend server được lắng nghe trên IP và port được cấu hình.
+
+Nếu 1 server thất bại trong việc health check, vậy nên không thể tiếp nhận request, nó sẽ tự động tắt trong backend, traffic sẽ chỉ chỏ đến nó đến khi nó khả dụng trở lại. Nếu tất cả các server trong backend fail, service sẽ không khả dụng đến khi có ít nhất 1 tron các backend server khả dụng trở lại.
+	
