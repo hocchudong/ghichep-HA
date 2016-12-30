@@ -22,7 +22,7 @@ Trong Pacemaker, các thành phần giao tiếp với nhau để quyết định
 
 #### 2.1. Cluster Information Base (CIB)
 
-Đây là trái tim của cluster. Trạng thái này luôn chạy ở in-memory, tiếp tục đồng bộ giữa các node trong cluster. Với một cluster administrator, không cần thiết phải sửa đổi CIB, nhưng đây sẽ là nguồn thông tin quan trọng khi cần debug.
+Đây là trái tim của cluster. Trạng thái này luôn chạy in-memory, liên tục đồng bộ giữa các node trong cluster. Với một cluster administrator, không cần thiết phải sửa đổi CIB, nhưng đây sẽ là nguồn thông tin quan trọng khi cần debug.
 
 Định dạng của CIB có các trường như sau:
 ```
@@ -43,6 +43,7 @@ Trong Pacemaker, các thành phần giao tiếp với nhau để quyết định
 </status>
 ```
 Trong CIB có 2 phần chính. Phần 1 chứa các thông tin cấu hình hệ thống, phần sau chứa các thông tin trạng thái. Trong phần cấu hình, có 3 phần chính.
+
 Đầu tien là `crm_config`, phần này chứa các thông số cấu hình áp dụng cho toàn bộ Pacemaker.
 ```
 <crm_config>
@@ -62,7 +63,7 @@ Tiếp là phần `<node>`, ở đây chứa các thông tin về tất cả cá
       <node id="3" uname="controller3.test"/>
  </nodes>
 ```
-Cuối cùng là phần resources, định nghĩa tất cả các resources được quản lý bởi cluster.
+Cuối cùng là phần `resources`, định nghĩa tất cả các resources được quản lý bởi cluster.
 ```
 <resources>
       <primitive id="p_haproxy" class="ocf" provider="fuel" type="ns_haproxy">
@@ -107,7 +108,7 @@ Cuối cùng là phần resources, định nghĩa tất cả các resources đư
  </resources>
 ```
 
-Phần thứ 2 của CIB là phần dài nhất. Nó chứa thông tin trạng thái hiện thời về các resource trong cluster. Nó chỉ ra chuyện gì đang xảy ra trong cluster, đây là các thông tin debug quan trong cho administrator.
+Phần thứ 2 của CIB là phần dài nhất. Nó chứa thông tin trạng thái hiện thời về các resource trong cluster. Nó cho biết chuyện gì đang xảy ra trong cluster, đây là các thông tin debug quan trọng cho administrator.
 
 ```
   <status>
