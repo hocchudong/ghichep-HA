@@ -1,4 +1,4 @@
-Tổng quan về High Availability Cluster
+## Tổng quan về High Availability Cluster
 
 ### 1. Các thành phần cấu thành HA Cluster
 
