@@ -209,7 +209,7 @@ Available commands:
 High Availability Web Konsole, cung cấp cho SUSE Linux Enterprise, OpenSUSE, Debian, Fedora. HAWK gồm 2 phần:
  - Service script: khởi chạy trên node cài đặt Hawk.
  - Hawk management interface: giao diện web để quản trị, Hawk sử dụng port 7630 (https://yourserver:7630)
- ![HAWK](images/pacemaker_hawk_3.jpg)
+ ![HAWK](/images/pacemaker_hawk_3.jpg)
 
 #### 3.4. PCS
 
