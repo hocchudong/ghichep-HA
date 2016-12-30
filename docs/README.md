@@ -44,14 +44,13 @@ Có 2 giải pháp để phòng tránh split brain.
 - Quorum. Quorum tức là "majority", và ý tưởng đằng sau quorum rất đơn giản: nếu cluster không có quorum, sẽ không có hành động nào xảy ra trong cluster. 
 
 - STONISH (shoot the other node in the head) hoặc Fence: Quorum là giải pháp tố để tránh các vấn đề đã nêu ở trên, nhưng để đảm bảo nó không bao giờ xảy ra khi nhiều node cùng sử dụng chung resource trên cluster, một cơ chế khác được ứng dụng, đó là STONISH hoặc fencing.
+ Trong STONISH, phần cứng sẽ được chỉ định tắt khi node không còn trả lời cluster. Ý tưởng của STONISH là trước khi dời resource tới node khác, cluster phải đảm bảo rằng node lỗi đã thực sự down. Để thực hiện điều này, cluster sẽ gửi lệnh `shutdown` tới STONISH device để tắt node tương ứng. Cách này đảm bảo không có data corruption.
 
-Trong STONISH, phần cứng sẽ được chỉ định tắt khi node không còn trả lời cluster. Ý tưởng của STONISH là trước khi dời resource tới node khác, cluster phải đảm bảo rằng node lỗi đã thực sự down. Để thực hiện điều này, cluster sẽ gửi lệnh `shutdown` tới STONISH device để tắt node tương ứng. Cách này đảm bảo không có data corruption.
+ Khi cài đặt cluster, cần quyết định loại STONISH device nào sẽ dùng:
 
-Khi cài đặt cluster, cần quyết định loại STONISH device nào sẽ dùng:
-
- - Trình quản lý tích hợp trong thiết bị, như HP ILO, Dell IDRAC, IBM RSA.
- - Power Switch có thể điều khiển thông qua IP, như các thiêt bị APC master.
- - Disk-based STONISH, sử dụng shared disk device để thực hiện STONISH operation.
- - Hypervisor-based STONISH, nói chuyện với hypervisor trong môi trường ảo hóa.
- - Các giải pháp STONISH mềm (không nên dùng).
+ * Trình quản lý tích hợp trong thiết bị, như HP ILO, Dell IDRAC, IBM RSA.
+ * Power Switch có thể điều khiển thông qua IP, như các thiêt bị APC master.
+ * Disk-based STONISH, sử dụng shared disk device để thực hiện STONISH operation.
+ * Hypervisor-based STONISH, nói chuyện với hypervisor trong môi trường ảo hóa.
+ * Các giải pháp STONISH mềm (không nên dùng).
 
