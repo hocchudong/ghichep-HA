@@ -172,6 +172,42 @@ Có nhiều loại resource cần quản lý, bao gồm:
 
  #### 2.5. STONISHD/FENCED
 
- Tiến trình stonishd(hoặc fenced trên Redhat-based cluster) nhận các instruction từ crmd về việc thay đổi trạng thái node. Nếu 1 node trong cluster không trả lời cho cluster membership layer, cluster membership layer sẽ thông báo cho crmd, và crmd cảnh báo stonishd để tắt node đó. Việc vận hành như vậy đặc biệt quan trọng cho cluster, và thậm chí nếu software cho phép định nghĩa cluster mà không cần stonishd, bạn cũng không nên làm vậy, vì nó tạo ra một Cluster không tin cậy(unreliable cluster)
+ Tiến trình stonishd(hoặc fenced trên Redhat-based cluster) nhận các instruction từ crmd về việc thay đổi trạng thái node. Nếu 1 node trong cluster không trả lời cho cluster membership layer (corosync), cluster membership layer sẽ thông báo cho crmd, và crmd cảnh báo stonishd để tắt node đó. Việc vận hành như vậy đặc biệt quan trọng cho cluster, và thậm chí nếu software cho phép định nghĩa cluster mà không cần stonishd, bạn cũng không nên làm vậy, vì nó tạo ra một Cluster không tin cậy(unreliable cluster).
 
- 
+ ### 3. Các công cụ quản lý Cluster
+
+ Có nhiều công cụ để thay đổi trạng thái của cluster trong CIB
+
+ #### 3.1. CRM shell
+
+ `crm shell` cung cấp giao diện tương tác với CIB. Phiên bản mới của `crm shell` cũng cho phép cấu hình corosync và các thành phần khác của cluster, đảm bảo package `crmsh` đã được cài đặt.
+
+ ```
+ # crm
+crm(live)# help
+This is the CRM command line interface program.
+Available commands:
+	cib manage shadow CIBs
+	resource resources management
+	configure CRM cluster configuration
+	node nodes management
+	options user preferences
+	history CRM cluster history
+	site Geo-cluster support
+	ra resource agents information center
+	status show cluster status
+	quit,bye,exit exit the program
+	help show help
+	end,cd,up go back one level
+```
+#### 3.2. Hawk
+
+High Availability Web Konsole, cung cấp cho SUSE Linux Enterprise, OpenSUSE, Debian, Fedora. HAWK gồm 2 phần:
+ - Service script: khởi chạy trên node cài đặt Hawk.
+ - Hawk management interface: giao diện web để quản trị, Hawk sử dụng port 7630 (https://yourserver:7630)
+ ![HAWK](images/pacemaker_hawk_3.jpg)
+
+#### 3.4. PCS
+
+`pcmk`(chứa pcs package) là tập lệnh đi kèm với pacemaker stack của Redhat trong Redhat 6, tính năng tương tự `crm shell`
+
