@@ -106,3 +106,5 @@ HAProxy sử dụng health checks để xác định nếu 1 backend server kh�
 
 Nếu 1 server thất bại trong việc health check, vậy nên không thể tiếp nhận request, nó sẽ tự động tắt trong backend, traffic sẽ chỉ chỏ đến nó đến khi nó khả dụng trở lại. Nếu tất cả các server trong backend fail, service sẽ không khả dụng đến khi có ít nhất 1 tron các backend server khả dụng trở lại.
 	
+Tham khảo:
+[1] - https://www.digitalocean.com/community/tutorials/an-introduction-to-haproxy-and-load-balancing-concepts
