@@ -157,36 +157,39 @@ Có nhiều loại resource cần quản lý, bao gồm:
  - *Clones*: một clone là một primitive cần được khởi chạy bởi cluster nhiều hơn 1 lần. Clones sử dụng cho các service cần phải chạy ở active/active mode, VD như clustered file systems.
  - *Master slaves*: đây là một dạng đặc biệt của clone, trong đó một số instance (ít nhất là 1) là active master, các instance còn lại là slave.
 
- #### 2.2. CRMD
+#### 2.2. CRMD
 
  Cluster resource manager daemon(crmd) là tiến trình quản lý trạng thái hoạt động của cluster. Chức năng chính của crmd là điều khiển các luồng thông tin giữa các thành phần của cluster, VD sắp xếp resource trên một số node. Nó cũng phụ trách thay đổi trạng thái node.
  Trên mỗi cluster, có một tiến trình crmd trên mỗi node. Một trong số chúng là master. Node mà master crmd hoạt động gọi là designated coordinator(DC). Nếu DC lỗi, cluster sẽ tự động chọn một node khác làm DC thay thế.
 
- #### 2.3. Pengine
+#### 2.3. Pengine
 
  CIB cung cấp mô tả cho trạng thái của cluster, và policy engine(pengine) là thành phần của cluster xử lý việc này. Nó tạo ra một danh sách các chỉ dẫn(instructions) và gửi tới `crmd`. Administrator có thể tác động pengine bằng cách định nghĩa các constraint trong cluster.
 
- #### 2.4. Lrmd
+#### 2.4. Lrmd
 
  Local resource manager daemon (lrmd) là thành phần của cluster chạy trên mỗi node. Nếu `crmd` quyết định một resource nào cần chạy trên node nào, nó sẽ ra lệnh cho `lrmd` trên node đó khởi chạy resource đó. Trong trường hợp resource đo không làm việc, lrmd sẽ thông báo lại crmd việc khởi chạy resource thất bại, cluster sau đó có thể khởi chạy resource đó trên node khác trong cluster. LRM cũng phụ trách việc giám sát việc vận hành resource và có thể dừng (stop) resource đang chạy trên 1 node.
 
- #### 2.5. STONISHD/FENCED
+#### 2.5. STONISHD/FENCED
 
  Tiến trình stonishd(hoặc fenced trên Redhat-based cluster) nhận các instruction từ crmd về việc thay đổi trạng thái node. Nếu 1 node trong cluster không trả lời cho cluster membership layer (corosync), cluster membership layer sẽ thông báo cho crmd, và crmd cảnh báo stonishd để tắt node đó. Việc vận hành như vậy đặc biệt quan trọng cho cluster, và thậm chí nếu software cho phép định nghĩa cluster mà không cần stonishd, bạn cũng không nên làm vậy, vì nó tạo ra một Cluster không tin cậy(unreliable cluster).
 
- ### 3. Các công cụ quản lý Cluster
+### 3. Các công cụ quản lý Cluster
 
- Có nhiều công cụ để thay đổi trạng thái của cluster trong CIB
+ Có nhiều công cụ để tương tác, thay đổi trạng thái của cluster trong CIB
 
- #### 3.1. CRM shell
+#### 3.1. CRM shell
 
- `crm shell` cung cấp giao diện tương tác với CIB. Phiên bản mới của `crm shell` cũng cho phép cấu hình corosync và các thành phần khác của cluster, đảm bảo package `crmsh` đã được cài đặt.
+ `crm shell` cung cấp giao diện tương tác với CIB. Phiên bản mới của `crm shell` cũng cho phép cấu hình corosync và các thành phần khác của cluster, để sử dụng `crm shell` phải đảm bảo package `crmsh` đã được cài đặt.
 
  ```
  # crm
 crm(live)# help
+
 This is the CRM command line interface program.
+
 Available commands:
+
 	cib manage shadow CIBs
 	resource resources management
 	configure CRM cluster configuration
@@ -200,6 +203,7 @@ Available commands:
 	help show help
 	end,cd,up go back one level
 ```
+
 #### 3.2. Hawk
 
 High Availability Web Konsole, cung cấp cho SUSE Linux Enterprise, OpenSUSE, Debian, Fedora. HAWK gồm 2 phần:
@@ -211,3 +215,6 @@ High Availability Web Konsole, cung cấp cho SUSE Linux Enterprise, OpenSUSE, D
 
 `pcmk`(chứa pcs package) là tập lệnh đi kèm với pacemaker stack của Redhat trong Redhat 6, tính năng tương tự `crm shell`
 
+Tham khảo:
+
+[1] - http://clusterlabs.org/doc/en-US/Pacemaker/1.0/html/Pacemaker_Explained/s-intro-architecture.html
