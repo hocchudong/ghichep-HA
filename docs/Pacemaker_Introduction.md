@@ -1,7 +1,7 @@
 ### 1. Giới thiệu chung
 Pacemaker là thành phần trong cluster đảm trách việc quản lý tài nguyên (resource management)
 
-![pacemaker_relate_to_otherpart](images/pacemaker_1.jpg)
+![pacemaker_relate_to_otherpart](/images/pacemaker_1.jpg)
 
 
 #### 1.1. Resource Agents
@@ -16,7 +16,7 @@ Pacemaker có thể được sử dụng để quản lý các thiết bị lưu
 
 ### 2. Thành phần
 
-![pacemaker_components](images/pacemaker_2.jpg)
+![pacemaker_components](/images/pacemaker_2.jpg)
 
 Trong Pacemaker, các thành phần giao tiếp với nhau để quyết định resource nào được chạy
 
