@@ -21,6 +21,7 @@ Pacemaker có thể được sử dụng để quản lý các thiết bị lưu
 Trong Pacemaker, các thành phần giao tiếp với nhau để quyết định resource nào được chạy
 
 #### 2.1. Cluster Information Base (CIB)
+
 Đây là trái tim của cluster. Trạng thái này luôn chạy ở in-memory, tiếp tục đồng bộ giữa các node trong cluster. Với một cluster administrator, không cần thiết phải sửa đổi CIB, nhưng đây sẽ là nguồn thông tin quan trọng khi cần debug.
 
 Định dạng của CIB có các trường như sau:
@@ -51,7 +52,7 @@ Trong CIB có 2 phần chính. Phần 1 chứa các thông tin cấu hình hệ 
         <nvpair name="no-quorum-policy" value="ignore" id="cib-bootstrap-options-no-quorum-policy"/>
         <nvpair name="stonith-enabled" value="false" id="cib-bootstrap-options-stonith-enabled"/>
       </cluster_property_set>
-    </crm_config>
+</crm_config>
 ```
 Tiếp là phần `<node>`, ở đây chứa các thông tin về tất cả các node trong cluster. 
 ```
@@ -59,7 +60,7 @@ Tiếp là phần `<node>`, ở đây chứa các thông tin về tất cả cá
       <node id="1" uname="controller1.test"/>
       <node id="2" uname="controller2.test"/>
       <node id="3" uname="controller3.test"/>
-    </nodes>
+ </nodes>
 ```
 Cuối cùng là phần resources, định nghĩa tất cả các resources được quản lý bởi cluster.
 ```
@@ -103,7 +104,7 @@ Cuối cùng là phần resources, định nghĩa tất cả các resources đư
           <nvpair name="resource-stickiness" value="1" id="vip__public-meta_attributes-resource-stickiness"/>
         </meta_attributes>
       </primitive>
-    </resources>
+ </resources>
 ```
 
 Phần thứ 2 của CIB là phần dài nhất. Nó chứa thông tin trạng thái hiện thời về các resource trong cluster. Nó chỉ ra chuyện gì đang xảy ra trong cluster, đây là các thông tin debug quan trong cho administrator.
@@ -150,3 +151,27 @@ c="0:0;7:0:0:63427bb5-fc45-4ec4-bcff-6bda4cea328a" call-id="22" rc-code="0" op-s
   </status>
 ```
 
+Có nhiều loại resource cần quản lý, bao gồm:
+ - *Primitives*: là service được quản lý bởi cluster. Đây là một service đơn lẻ, được quản lý bởi sysctl, runlevels, hoặc các node không thuộc cluster.
+ - *Groups*: group là tập hợp các primitives. Lợi thế khi làm việc với group là cluster sẽ khởi chạy các primitives là một phần của group, theo thứ tự được định nghĩa trước trong group. Cluster cũng giữ các primitives trong cùng 1 group, nếu một primitive lỗi, các primitives tiếp sau không thể khởi chạy.
+ - *Clones*: một clone là một primitive cần được khởi chạy bởi cluster nhiều hơn 1 lần. Clones sử dụng cho các service cần phải chạy ở active/active mode, VD như clustered file systems.
+ - *Master slaves*: đây là một dạng đặc biệt của clone, trong đó một số instance (ít nhất là 1) là active master, các instance còn lại là slave.
+
+ #### 2.2. CRMD
+
+ Cluster resource manager daemon(crmd) là tiến trình quản lý trạng thái hoạt động của cluster. Chức năng chính của crmd là điều khiển các luồng thông tin giữa các thành phần của cluster, VD sắp xếp resource trên một số node. Nó cũng phụ trách thay đổi trạng thái node.
+ Trên mỗi cluster, có một tiến trình crmd trên mỗi node. Một trong số chúng là master. Node mà master crmd hoạt động gọi là designated coordinator(DC). Nếu DC lỗi, cluster sẽ tự động chọn một node khác làm DC thay thế.
+
+ #### 2.3. Pengine
+
+ CIB cung cấp mô tả cho trạng thái của cluster, và policy engine(pengine) là thành phần của cluster xử lý việc này. Nó tạo ra một danh sách các chỉ dẫn(instructions) và gửi tới `crmd`. Administrator có thể tác động pengine bằng cách định nghĩa các constraint trong cluster.
+
+ #### 2.4. Lrmd
+
+ Local resource manager daemon (lrmd) là thành phần của cluster chạy trên mỗi node. Nếu `crmd` quyết định một resource nào cần chạy trên node nào, nó sẽ ra lệnh cho `lrmd` trên node đó khởi chạy resource đó. Trong trường hợp resource đo không làm việc, lrmd sẽ thông báo lại crmd việc khởi chạy resource thất bại, cluster sau đó có thể khởi chạy resource đó trên node khác trong cluster. LRM cũng phụ trách việc giám sát việc vận hành resource và có thể dừng (stop) resource đang chạy trên 1 node.
+
+ #### 2.5. STONISHD/FENCED
+
+ Tiến trình stonishd(hoặc fenced trên Redhat-based cluster) nhận các instruction từ crmd về việc thay đổi trạng thái node. Nếu 1 node trong cluster không trả lời cho cluster membership layer, cluster membership layer sẽ thông báo cho crmd, và crmd cảnh báo stonishd để tắt node đó. Việc vận hành như vậy đặc biệt quan trọng cho cluster, và thậm chí nếu software cho phép định nghĩa cluster mà không cần stonishd, bạn cũng không nên làm vậy, vì nó tạo ra một Cluster không tin cậy(unreliable cluster)
+
+ 
