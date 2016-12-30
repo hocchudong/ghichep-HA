@@ -4,11 +4,11 @@ Corosync là giải pháp để quản lý và giám sát node membership. Ngoà
 #### 1.1. Kiến trúc
 
 Các service được cung cấp bởi Corosync Service Engine Internal API:
- - Totem Single Ring Ordẻing và giao thức Membership, cung cấp Extended Virtual Synchorony model cho việc trao đổi gói tin và tạo membership.
+ - Totem Single Ring Ordering và giao thức Membership, cung cấp Extended Virtual Synchorony model cho việc trao đổi gói tin và tạo membership.
  - coroipc: hệ thống IPC chia sẻ bộ nhớ hiệu năng cao
  - Object Database, cung cấp một database in-memory
  - Hệ thống để định tuyến IPC và bản tin Totem tởi các engine service tương ứng.
- 
+
 Corosync cũng cung cấp các engine service mặc định dùng C API:
  - cpg: Closed Process Group
  - sam: Simple Availability Manager
