@@ -44,6 +44,7 @@ Có 2 giải pháp để phòng tránh split brain.
 - Quorum. Quorum tức là "majority", và ý tưởng đằng sau quorum rất đơn giản: nếu cluster không có quorum, sẽ không có hành động nào xảy ra trong cluster. 
 
 - STONISH (shoot the other node in the head) hoặc Fence: Quorum là giải pháp tố để tránh các vấn đề đã nêu ở trên, nhưng để đảm bảo nó không bao giờ xảy ra khi nhiều node cùng sử dụng chung resource trên cluster, một cơ chế khác được ứng dụng, đó là STONISH hoặc fencing.
+
  Trong STONISH, phần cứng sẽ được chỉ định tắt khi node không còn trả lời cluster. Ý tưởng của STONISH là trước khi dời resource tới node khác, cluster phải đảm bảo rằng node lỗi đã thực sự down. Để thực hiện điều này, cluster sẽ gửi lệnh `shutdown` tới STONISH device để tắt node tương ứng. Cách này đảm bảo không có data corruption.
 
  Khi cài đặt cluster, cần quyết định loại STONISH device nào sẽ dùng:
