@@ -25,6 +25,7 @@ Một cluster nên có nhiều kết nối mạng.
 #### 1.3. Bonded Network Devices
 
 Để kết nối cluster node tới các dải mạng, chỉ dùng 1 card mạng (NIC). Nếu NIC đó lỗi, node sẽ mất kết nối trên dải mạng đó. 
+
 Giải pháp là sử dụng network bonding. 1 network bond là một nhóm nhiều NIC. Thông thường, có 2 NIC trong 1 bond. Mục đích của bonding là dự phòng: đảm bảo nếu 1 NIC lỗi, NIC còn lại sẽ đảm bảo kết nối của node.
 
 #### 1.4. Multipathing
